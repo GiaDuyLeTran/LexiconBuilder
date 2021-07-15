@@ -2,11 +2,24 @@ import java.io.*;
 import java.util.*;
 
 public class LexiconTester {
+    // Main section
     public static void main(String[] args) {
+        ReadTextFiles();
+    }
+
+    // Read words from text files and print out the words in alphabetical order
+    public static void ReadTextFiles() {
         try {
             // Create a file object which links to the path of text file
             File file_dir = new File("F:\\Study\\Coding practice\\CodingMentor\\LexiconBuilder\\TextFiles");
             File[] files = file_dir.listFiles();
+
+            // Data structure to store words
+            ArrayList aListWords = new ArrayList();
+            // Create some variables to hold the word
+            String s;
+            String word = null;
+            String[] arrayWords;
 
             for (File f : files)
             {
@@ -16,15 +29,8 @@ public class LexiconTester {
                     try
                     {
                         inputStream = new BufferedReader(new FileReader(f));
-                        // Create some variables to hold the word
-                        String s;
-                        String word = null;
-                        String[] arrayWords;
-                        // Data structure of lexicon
-                        ArrayList aListWords = new ArrayList();
-                        // Variable to count number of words in total (including duplicate)
-                        int j = 0;
-                        while ((s = inputStream.readLine()) != null) {
+                        while ((s = inputStream.readLine()) != null)
+                        {
                             // Create a new scanner with the specified String Object
                             Scanner scan = new Scanner(s);
                             // Check if the scanner has a token
@@ -33,7 +39,6 @@ public class LexiconTester {
                                 // for each word, remove any non-letter characters, turn to lowercase
                                 word = scan.next().replaceAll("[^a-zA-Z ]", "").toLowerCase();
                                 aListWords.add(word); // add word to lexicon
-                                j++; // increase word count
                             }
                         }
                         aListWords = removeDuplicates(aListWords); // remove any word duplicate
@@ -44,7 +49,7 @@ public class LexiconTester {
                         {
                             System.out.println(aListWords.get(i));
                         }
-                        System.out.println("Total words: " + j);
+                        System.out.println("Total words: " + size);
                     } finally {
                         if (inputStream != null) {
                             inputStream.close();
