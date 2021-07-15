@@ -5,41 +5,53 @@ public class LexiconTester {
     public static void main(String[] args) {
         try {
             // Create a file object which links to the path of text file
-            File file = new File("F:\\Study\\Coding practice\\CodingMentor\\PracticeTest1\\sample1-pp.txt");
-            // Read in the file
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            // Create some variables to hold the word
-            String s;
-            String word = null;
-            String[] arrayWords;
-            // Data structure of lexicon
-            ArrayList aListWords = new ArrayList();
-            // Variable to count number of words in total (including duplicate)
-            int j = 0;
-            // Read every line of text
-            while ((s = br.readLine()) != null)
+            File file_dir = new File("F:\\Study\\Coding practice\\CodingMentor\\LexiconBuilder\\TextFiles");
+            File[] files = file_dir.listFiles();
+
+            for (File f : files)
             {
-                // Create a new scanner with the specified String Object
-                Scanner scan = new Scanner(s);
-                // Check if the scanner has a token
-                while (scan.hasNext())
+                if(f.isFile())
                 {
-                    // for each word, remove any non-letter characters, turn to lowercase
-                    word = scan.next().replaceAll("[^a-zA-Z ]", "").toLowerCase();
-                    aListWords.add(word); // add word to lexicon
-                    j++; // increase word count
+                    BufferedReader inputStream = null;
+                    try
+                    {
+                        inputStream = new BufferedReader(new FileReader(f));
+                        // Create some variables to hold the word
+                        String s;
+                        String word = null;
+                        String[] arrayWords;
+                        // Data structure of lexicon
+                        ArrayList aListWords = new ArrayList();
+                        // Variable to count number of words in total (including duplicate)
+                        int j = 0;
+                        while ((s = inputStream.readLine()) != null) {
+                            // Create a new scanner with the specified String Object
+                            Scanner scan = new Scanner(s);
+                            // Check if the scanner has a token
+                            while (scan.hasNext())
+                            {
+                                // for each word, remove any non-letter characters, turn to lowercase
+                                word = scan.next().replaceAll("[^a-zA-Z ]", "").toLowerCase();
+                                aListWords.add(word); // add word to lexicon
+                                j++; // increase word count
+                            }
+                        }
+                        aListWords = removeDuplicates(aListWords); // remove any word duplicate
+                        Collections.sort(aListWords); // sort in alphabetical order
+                        int size = aListWords.size();
+                        // Print out word in lexicon
+                        for (int i = 0; i < size; i++)
+                        {
+                            System.out.println(aListWords.get(i));
+                        }
+                        System.out.println("Total words: " + j);
+                    } finally {
+                        if (inputStream != null) {
+                            inputStream.close();
+                        }
+                    }
                 }
             }
-            br.close();
-            aListWords = removeDuplicates(aListWords); // remove any word duplicate
-            Collections.sort(aListWords); // sort in alphabetical order
-            int size = aListWords.size();
-            // Print out word in lexicon
-            for (int i = 0; i < size; i++)
-            {
-                System.out.println(aListWords.get(i));
-            }
-            System.out.println("Total words: " + j);
         } catch (Exception e)
         {
             System.err.println("Error: " + e.getMessage());
