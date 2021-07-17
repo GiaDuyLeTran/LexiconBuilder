@@ -66,38 +66,11 @@ public class LexiconTester {
         }
     }
 
-    // Calculate the frequency of each word
-    public static <T> ArrayList<T> checkFrequency(ArrayList<T> aList) {
-        // Create a new ArrayList
-        ArrayList<T> newList = new ArrayList<T>();
-        ArrayList<Integer> freq = new ArrayList<Integer>();
-        /*
-        while (aList.size() != 0)
-        {
-            T word = aList.get(0);
-            int frequency = Collections.frequency(aList, word);
-            freq.add(frequency);
-            aList.removeAll(Collections.singleton(word));
-            //System.out.println(word + " " + frequency);
-        }
-        */
-        // Traverse through the first list
-        for (T element : aList)
-        {
-            // if this element not in newList, then add it
-            if (!newList.contains(element))
-            {
-                newList.add(element);
-            }
-        }
-        return newList;
-    }
-
     // Calculate how many letters different between two words
     private static int CountWordDiff(String s1, String s2)
     {
         int word_diff = 0;
-        for (int i = s1.length() - 1; i >= 0; i--)
+        for (int i = 0; i <= s1.length() - 1; i++)
         {
             if (s1.charAt(i) != s2.charAt(i))
             {
@@ -105,16 +78,6 @@ public class LexiconTester {
             }
         }
         return word_diff;
-    }
-
-    // Check if the two words are only different in one character
-    private static boolean isDiffOne(String s1, String s2)
-    {
-        int diff = CountWordDiff(s1, s2);
-        if (diff > 1)
-            return false;
-        else
-            return true;
     }
 
     // Read the text file
